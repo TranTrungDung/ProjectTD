@@ -7,121 +7,11 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  FlatList,
 } from 'react-native';
+import FlatListScreen from './components/FlatListScreen';
+import listTodos from './Data/Data';
 
-const listTodos = [
-  {
-    id: 1,
-    title: 'Do Math Homework',
-    time: 'Today At 16:45',
-    doFor: 'University',
-    icon: require('../../assets/image/flag.png'),
-  },
-  {
-    id: 2,
-    title: 'Tack out dogs',
-    time: 'Today At 18:20',
-    doFor: 'Home',
-    icon: require('../../assets/image/flag.png'),
-  },
-  {
-    id: 3,
-    title: 'Business meeting with CEO',
-    time: 'Today At 08:15',
-    doFor: 'Work',
-    icon: require('../../assets/image/flag.png'),
-  },
-];
 const HomeScreen = () => {
-  const [exist, setExist] = useState(listTodos);
-
-  const renderItem = ({item}) => {
-    return (
-      <View
-        style={{
-          backgroundColor: 'gray',
-          width: '100%',
-          height: 72,
-          marginBottom: 16,
-          borderRadius: 4,
-        }}>
-        <View style={{flex: 1}}>
-          <Text
-            style={{
-              paddingTop: 12,
-              paddingLeft: 10,
-              fontSize: 16,
-              lineHeight: 21,
-              fontWeight: '400',
-              fontFamily: 'Lato-Regular',
-              color: '#FFF',
-            }}>
-            {item.title}
-          </Text>
-        </View>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
-            <Text
-              style={{
-                paddingLeft: 10,
-                fontSize: 14,
-                lineHeight: 21,
-                fontWeight: '400',
-                fontFamily: 'Lato-Regular',
-                color: '#AFAFAF',
-              }}>
-              {item.time}
-              {/* {index} */}
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'orange',
-                width: 42,
-                height: 29,
-                marginRight: 12,
-                borderRadius: 4,
-              }}>
-              <Text
-                style={{
-                  fontFamily: 'Lato-Regular',
-                  fontSize: 12,
-                  lineHeight: 21,
-                  fontWeight: '400',
-                  color: '#FFF',
-                  textAlign: 'center',
-                }}></Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={item => {
-                getIndex(item);
-              }}
-              style={{
-                borderRadius: 4,
-                backgroundColor: 'pink',
-                width: 42,
-                height: 29,
-                marginRight: 10,
-              }}>
-              <Text></Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    );
-  };
-  const getIndex = useCallback(item => {
-    console.log(item.id);
-  }, []);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -134,7 +24,7 @@ const HomeScreen = () => {
           <Image source={require('../../assets/image/ava.png')} />
         </View>
 
-        {typeof exist !== 'object' ? (
+        {typeof listTodos !== 'object' ? (
           <View style={styles.viewContent}>
             <Image source={require('../../assets/image/checklist1.png')} />
             <Text style={styles.textTitle}>What do you want to do today?</Text>
@@ -143,47 +33,7 @@ const HomeScreen = () => {
         ) : (
           <View style={styles.container}>
             <View style={styles.wrap}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingTop: 16,
-                  paddingBottom: 20,
-                }}>
-                <View style={styles.viewSearch}>
-                  <Image
-                    source={require('../../assets/image/search-normal.png')}
-                    style={styles.imgSearch}
-                  />
-                  <TextInput
-                    placeholder="Search for your task..."
-                    placeholderTextColor="#AFAFAF"
-                    selectionColor={'#fff'}
-                    style={styles.inputSearch}
-                  />
-                </View>
-                <View>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: '#8687E7',
-                      borderRadius: 4,
-                      width: 50,
-                      height: 50,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <Image source={require('../../assets/image/add.png')} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View>
-                <FlatList
-                  data={listTodos}
-                  renderItem={renderItem}
-                  keyExtractor={item => item.id.toString()}
-                />
-              </View>
+              <FlatListScreen />
             </View>
           </View>
         )}
@@ -245,8 +95,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    // marginBottom: 20,
-    // marginTop: 16,
   },
   imgSearch: {
     borderColor: 'blue',
